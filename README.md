@@ -89,3 +89,48 @@ resources :chats, only: [:create]
     params.require(:chat).permit(:message, :room_id)
   end
 ```
+### ⑥chats show viewを記述
+```
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <h2 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>"><%= @user.name %> さんとのチャット</h2>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="text-align:left;font-size:20px;"><%= current_user.name %></th>
+                        <th style="text-align:right;font-size:20px;"><%= @user.name %></th>
+                    </tr>
+                </thead>
+                <tbody class="message">
+                <% @chats.each do |chat| %>
+                    <tr>
+                            <% if chat.user_id == current_user.id %>
+                            <th colspan="2"style="text-align:left;border:none;">
+                                <span style="background-color: greenyellow;border-radius: 4px;padding: 0% 3% 5% 3%;"><%= chat.message %></span>
+                            </th>
+                            <% else %>
+                            <th colspan="2"style="text-align:right;border:none;">
+                                <span style="background-color: greenyellow;border-radius: 4px;padding: 0% 3% 5% 3%;"><%= chat.message %></span>
+                            </th>
+                            <% end %>
+                    </tr>                            
+                <% end %>
+                </tbody>
+            </table>
+            
+            <%= form_with model: @chat, remote: true do |f| %>
+                <%= f.text_field :message %>
+                <%= f.hidden_field :room_id %>
+                <%= f.submit "送信"%>
+            <% end %>
+        </div>
+    </div>
+</div>
+```
+### ⑦create.js.erbの作成
+```
+$('.message').append("<tr><th colspan='2'style='text-align:left;border:none;'><span style='background-color: greenyellow;border-radius: 4px;padding: 0% 3% 5% 3%;'><%= @chat.message %></span></th></tr>");
+$('input[type=text]').val("")
+```
