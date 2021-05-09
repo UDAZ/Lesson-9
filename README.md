@@ -44,3 +44,11 @@ belongs_to :room
 get 'chat/:id' => 'chats#show', as: 'chat'
 resources :chats, only: [:create]
 ```
+### ④users showにview追記
+```
+      <h2>User info</h2>
+      <%= render 'info', user: @user %>
+      <% if current_user != @user %>
+        <%= link_to 'チャットする', chat_path(@user.id) %>
+      <% end %> 
+```
