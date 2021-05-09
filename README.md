@@ -131,6 +131,6 @@ resources :chats, only: [:create]
 ```
 ### ⑦create.js.erbの作成
 ```
-$('.message').append("<p style='text-align: left;'><%= @chat.message %></p>");
+$('.message').append("<tr><th colspan='2'style='text-align:left;border:none;'><span style='background-color: greenyellow;border-radius: 4px;padding: 0% 3% 5% 3%;'><%= @chat.message %></span></th></tr>");
 $('input[type=text]').val("")
 ```
