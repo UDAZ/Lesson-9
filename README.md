@@ -39,3 +39,8 @@ chat.rb
 belongs_to :user
 belongs_to :room
 ```
+### ③ルーティングを追記
+```
+get 'chat/:id' => 'chats#show', as: 'chat'
+resources :chats, only: [:create]
+```
